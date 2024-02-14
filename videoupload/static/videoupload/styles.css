@@ -10,20 +10,9 @@
 
 body{
     min-height:100vh;
+    background:#001018;
+}
 
-}
-.home{
-    position:relative;
-    width:100%;
-    min-height:100vh;
-    background:url("{% static 'videoupload/cf.jpg' %}")no-repeat;
-    background-size:cover;
-    background-position:center;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:20px 100px;
-}
 
 
 header{
@@ -57,7 +46,7 @@ header .logo{
     letter-spacing:2px;
 }
 
-}
+
 header .menu{
     position:relative;
     display: flex;

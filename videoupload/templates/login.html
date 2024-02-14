@@ -1,41 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Website</title>
-   {% load static %}
-    <link rel="stylesheet" href="{% static 'videoupload/styles.css' %}">
-</head>
-<body>
+{% extends 'base.html' %}
 
-    <header>
-        <h1>Website</h1>
-    </header>
+{% block title %}Login - Website{% endblock %}
 
-    <nav>
-        <a href="{% url 'upload' %}">Upload</a>
-        <a href="{% url 'login' %}">Login</a>
-        <a href="{% url 'logout' %}">Logout</a>
-        <a href="{% url 'register' %}">Register</a>
-    </nav>
+{% block content %}
+    <div class="login-container">
+        <h2>Login</h2>
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
 
-    <main>
-        <div class="login-container">
-            <h2>Login</h2>
-            <form method="post" action="{% url 'login' %}">
-    {% csrf_token %}
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
-
-    <button type="submit">Login</button>
-</form>
-
-        </div>
-    </main>
-
-</body>
-</html>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+{% endblock %}

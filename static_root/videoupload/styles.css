@@ -10,15 +10,13 @@
 
 body{
     min-height:100vh;
-     background:url(static/videoupload/cf.jpg)no-repeat;
-    background-size:cover;
-    background-position:center;
+
 }
 .home{
     position:relative;
     width:100%;
     min-height:100vh;
-    background:url(static/videoupload/cf.jpg)no-repeat;
+    background:url("{% static 'videoupload/cf.jpg' %}")no-repeat;
     background-size:cover;
     background-position:center;
     display:flex;
@@ -132,4 +130,11 @@ header .btn{
         padding: 0 15px;
         }
 }
+
+
+html{
+    scroll-behaviour:smooth;
+    }
+    body::-webkit-scrollbar {
+    display: none;}
 
