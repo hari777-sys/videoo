@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout - Website</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'videoupload/styles.css' %}">
+</head>
+<body>
+
+    <header>
+        <h1>Website</h1>
+    </header>
+
+    <nav>
+        <a href="{% url 'upload' %}">Upload</a>
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'logout' %}">Logout</a>
+        <a href="{% url 'register' %}">Register</a>
+    </nav>
+
+    <main>
+        <div class="logout-container">
+            <h2>Logout</h2>
+            <p>You have been successfully logged out. Thank you for visiting!</p>
+        </div>
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Website</title>
+     {% load static %}
+    <link rel="stylesheet" href="{% static 'videoupload/styles.css' %}">
+</head>
+<body>
+
+   <header>
+        <a href="#" class="logo">thiagarajar college</a>
+        <div class="btn">
+            <i class="fas  fa-bars menu-btn"></i>
+        </div>
+        <div class="menu">
+            <div class="btn">
+                <i class="fas fa-times close-btn"></i>
+            </div>
+            <a href="{% url 'upload' %}">Upload</a>
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'logout' %}">Logout</a>
+        <a href="{% url 'register' %}">Register</a>
+        </div>
+    </header>
+
+</body>
+</html>
