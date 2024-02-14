@@ -7,9 +7,17 @@
         <h2>Upload</h2>
         <form method="post" action="{% url 'upload' %}" enctype="multipart/form-data">
             {% csrf_token %}
-            <label for="file">Choose a file:</label>
-            <input type="file" id="file" name="file" required>
 
+            <label >Title</label>
+                    {{ form.title }}
+                <br>
+            <label >Description</label>
+                    {{ form.description }}
+                <br>
+            <label >Video File</label>
+                    {{ form.video_file }}
+
+        <br><br>
             <button type="submit">Upload</button>
         </form>
     </div>

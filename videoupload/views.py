@@ -4,10 +4,31 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login,logout
 from .forms import VideoForm
 from django.contrib.auth.decorators import login_required
-
+import boto3
 
 def home(request):
-    return render(request, 'index.html')
+    s3 = boto3.client('s3', region_name='us-east-1')
+
+    # Get the list of objects (videos) in the bucket
+    response = s3.list_objects(Bucket='ingestbuckk')
+
+    # Extract video URLs from the response
+    videos = []
+    for item in response.get('Contents', []):
+        # Construct the URL for each video object
+        url = f"https://{response['Name']}.s3.amazonaws.com/{item['Key']}"
+
+        # Extract title and description if available
+        title, description = '', ''
+        if 'Metadata' in item:
+            title = item['Metadata'].get('Title', '')
+            description = item['Metadata'].get('Description', '')
+
+        videos.append({'url': url, 'title': title, 'description': description})
+
+    return render(request, 'index.html', {'videos': videos})
+
+
 @login_required(login_url='login')
 def upload(request):
     if request.method == 'POST':

@@ -13,8 +13,6 @@ body{
     background:#001018;
 }
 
-
-
 header{
     z-index:999;
     position:fixed;
@@ -77,6 +75,91 @@ header .btn{
     cursor:pointer;
     display:none;
 }
+.register-container,
+.login-container,
+.upload-container,
+.logout-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Additional styles for the container */
+.register-container,
+.login-container,
+.upload-container,
+.logout-container {
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    margin-top: 100px;
+}
+
+/* Style the headings */
+.register-container h2,
+.login-container h2,
+.upload-container h2,
+.logout-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Style the forms */
+.register-container form,
+.login-container form,
+.upload-container form {
+    margin-top: 20px;
+}
+
+/* Style the messages */
+.logout-container p {
+    font-size: 18px;
+    margin-top: 20px;
+}
+button, input[type="submit"] {
+    border: none;
+    border-radius: 20px;
+    padding: 12px 24px;
+    cursor: pointer;
+    background-color: #001018; /* Change as needed */
+    color: white;
+    transition:transform 0.3s ease;
+}
+input[type="file"]{
+    border: none;
+    border-radius: 20px;
+    padding: 12px 24px;
+    cursor: pointer;
+    background-color: #001018; /* Change as needed */
+    color: white;
+    transition:transform 0.3s ease;
+}
+
+
+button:hover,
+input[type="submit"]:hover,
+input[type="file"]:hover {
+     transform: scale(1.05); /* Change as needed */
+}
+
+/* Ensure text boxes are in a straight line */
+form label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+ textarea {
+    width: calc(100% - 20px); /* Adjust as needed */
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
 
 @media (max-width: 1060px){
     header .btn{

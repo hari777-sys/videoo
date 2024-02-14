@@ -5,6 +5,7 @@ class VideoForm(forms.ModelForm):
     class Meta:
         model = Video
         fields = ['title', 'description', 'video_file']
+
     def clean_video_file(self):
         video_file = self.cleaned_data.get('video_file')
 
