@@ -2,17 +2,13 @@
 {% block title %}Home - Website{% endblock %}
 
 {% block content %}
-    <h2>Welcome to the Homepage!</h2>
-
-    <div class="video-row">
+    <div class="video-container">
         {% for video in videos %}
             <div class="video-card">
                 <video width="320" height="240" controls>
                     <source src="{{ video.url }}" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
-                <p>{{ video.title }}</p>
-                <p>{{ video.description }}</p>
             </div>
         {% endfor %}
     </div>

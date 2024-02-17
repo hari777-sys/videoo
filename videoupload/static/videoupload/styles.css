@@ -75,6 +75,19 @@ header .btn{
     cursor:pointer;
     display:none;
 }
+
+.video-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-top: 40px; /* Adjust top margin as needed */
+}
+
+.video-card {
+  width: 20px; /* Adjust the width of each video card as needed */
+  margin-right: 350px;
+  margin-left: 75px;/* Adjust the spacing between video cards as needed */
+}
 .register-container,
 .login-container,
 .upload-container,
@@ -160,7 +173,6 @@ form input[type="password"],
     box-sizing: border-box;
 }
 
-
 @media (max-width: 1060px){
     header .btn{
         display: block;
@@ -201,6 +213,11 @@ form input[type="password"],
         margin: 20px;
         padding: 0 15px;
         }
+    .video-card {
+    width: calc(50% - 20px); /* Adjust for responsiveness on smaller screens */
+    margin-right: 20px;
+    margin-bottom: 20px;
+  }
 }
 
 

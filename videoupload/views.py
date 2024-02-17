@@ -10,7 +10,7 @@ def home(request):
     s3 = boto3.client('s3', region_name='us-east-1')
 
     # Get the list of objects (videos) in the bucket
-    response = s3.list_objects(Bucket='ingestbuckk')
+    response = s3.list_objects(Bucket='videobleepingstack-destinationbucket84c050d8-lvjgauckm6rd')
 
     # Extract video URLs from the response
     videos = []
