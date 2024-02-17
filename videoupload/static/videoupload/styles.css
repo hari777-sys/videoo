@@ -80,13 +80,35 @@ header .btn{
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  margin-top: 40px; /* Adjust top margin as needed */
+  margin-top: 80px;
 }
 
 .video-card {
-  width: 20px; /* Adjust the width of each video card as needed */
-  margin-right: 350px;
-  margin-left: 75px;/* Adjust the spacing between video cards as needed */
+  width: 320px;
+  margin-right: 40px;
+  margin-left: 75px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition:transform 0.3s, box-shadow 0.3s;
+  overflow: hidden;
+}
+.video-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+.video-card video {
+  width: 100%;
+  height: auto;
+}
+
+.video-card .title {
+  padding: 10px;
+   text-align: center;
+    max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .register-container,
 .login-container,
@@ -129,6 +151,7 @@ header .btn{
     font-size: 18px;
     margin-top: 20px;
 }
+
 button, input[type="submit"] {
     border: none;
     border-radius: 20px;

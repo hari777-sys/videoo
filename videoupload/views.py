@@ -19,12 +19,9 @@ def home(request):
         url = f"https://{response['Name']}.s3.amazonaws.com/{item['Key']}"
 
         # Extract title and description if available
-        title, description = '', ''
-        if 'Metadata' in item:
-            title = item['Metadata'].get('Title', '')
-            description = item['Metadata'].get('Description', '')
+        filename = item['Key'].split('/')[-1].split('.')[0]
 
-        videos.append({'url': url, 'title': title, 'description': description})
+        videos.append({'url': url, 'filename': filename})
 
     return render(request, 'index.html', {'videos': videos})
 
