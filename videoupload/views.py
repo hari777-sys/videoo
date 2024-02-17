@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login,logout
 from .forms import VideoForm
 from django.contrib.auth.decorators import login_required
+from django.utils.text import slugify
 import boto3
 
 def home(request):
@@ -32,6 +33,9 @@ def upload(request):
         form = VideoForm(request.POST, request.FILES)
         if form.is_valid():
             video = form.save(commit=False)
+            title = form.cleaned_data['title']
+            filename = slugify(title) + '.mp4'
+            video.video_file.name = filename
             video.user = request.user
             video.save()
             return redirect('home')
@@ -45,7 +49,7 @@ class CustomLoginView(LoginView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
-        return redirect('upload')
+        return redirect('home')
 
 def custom_logout(request):
     logout(request)
