@@ -12,7 +12,24 @@
                 <div class="title">
                     {{ video.filename }}
                 </div>
+                <button class="options-btn" onclick="toggleOptionsMenu(this)"><i class="fas fa-ellipsis-v"></i></button>
+            <div class="options-menu">
+
+            <a href="{% url 'delete_video' video.filename %}">Delete</a>
+
+                <a href="#">Report</a>
+            </div>
             </div>
         {% endfor %}
     </div>
+ <script>
+        function toggleOptionsMenu(btn) {
+            var videoCard = btn.parentElement;
+            var optionsMenu = videoCard.querySelector('.options-menu');
+            optionsMenu.classList.toggle('show');
+        }
+
+
+    </script>
+
 {% endblock %}

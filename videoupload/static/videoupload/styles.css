@@ -76,6 +76,23 @@ header .btn{
     display:none;
 }
 
+ .video-card video::-webkit-media-controls-enclosure {
+        position: relative;
+        width: 100%;
+        background-color: transparent;
+        -moz-border-radius: 1px !important;
+        -webkit-border-radius: 1px !important;
+        border-radius: 1px !important;
+        filter: alpha(opacity=80);
+        opacity: 0.4;
+        margin-bottom: -5px; /* Adjust this value based on the height of the controls */
+        overflow: hidden;
+    }
+    .video-card video::-webkit-media-controls-panel {
+        background-color: #eee;
+        height: 35px !important; /* Adjust this value based on the desired height of the controls */
+    }
+
 .video-container {
   display: flex;
   flex-wrap: wrap;
@@ -84,18 +101,19 @@ header .btn{
 }
 
 .video-card {
-  width: 320px;
+  width: 370px;
   margin-right: 40px;
-  margin-left: 75px;
+  margin-left: 40px;
+  margin-top:40px;
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition:transform 0.3s, box-shadow 0.3s;
   overflow: hidden;
+     position: relative;
 }
 .video-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-3px);
 }
 .video-card video {
   width: 100%;
@@ -109,6 +127,64 @@ header .btn{
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.options {
+    display: flex; /* Align button and options menu in a row */
+    align-items: center; /* Center-align items vertically */
+}
+.options-btn {
+    background-color:transparent;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+}
+.options-btn i {
+    font-size: 18px;
+    color:black;
+}
+
+.options-btn i:hover{
+background-color:grey;
+}
+.options-menu {
+    display: none;
+    position: absolute;
+    top: 30px; /* Adjust as needed */
+    right: 10px; /* Adjust as needed */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+}
+
+.options-menu a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.3s;
+}
+
+.options-menu a:hover {
+    background-color: #f5f5f5;
+}
+
+/* Show/hide animation for options menu */
+.options-menu.show {
+    display: block;
+    animation: slideIn 0.3s ease-in-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 .register-container,
 .login-container,

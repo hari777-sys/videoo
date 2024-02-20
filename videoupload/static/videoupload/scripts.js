@@ -22,3 +22,17 @@ document.getElementById('id_video_file').addEventListener('change', function() {
         this.value = '';
     }
 });
+
+const optionButtons = document.querySelectorAll('.options-btn');
+    const optionMenus = document.querySelectorAll('.options-menu');
+
+    // Iterate over each button and add click event listener
+    optionButtons.forEach((button, index) => {
+        button.addEventListener('click', () => {
+            // Toggle visibility of the menu
+            optionMenus[index].classList.toggle('show');
+        });
+    });
+
+
+
