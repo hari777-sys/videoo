@@ -10,3 +10,6 @@ class Video(models.Model):
     video_file = models.FileField(upload_to=video_file_path)
     uploaded_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title

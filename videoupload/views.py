@@ -11,40 +11,7 @@ from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .models import Video
-
-
-def delete_video(request, filename):
-    # Append ".mp4" extension to the filename
-    filename_with_extension = filename + ".mp4"
-
-    # Get AWS credentials from Django settings
-    aws_access_key_id = settings.AWS_ACCESS_KEY_ID
-    aws_secret_access_key = settings.AWS_SECRET_ACCESS_KEY
-
-    # Get S3 bucket information from the home listing objects
-    bucket_name = 'videobleepingstack-destinationbucket84c050d8-lvjgauckm6rd'
-    region_name = 'us-east-1'  # Update with your region
-
-    # Connect to S3
-    s3 = boto3.client('s3', region_name=region_name,
-                      aws_access_key_id=aws_access_key_id,
-                      aws_secret_access_key=aws_secret_access_key)
-
-    try:
-        # Delete the object from the S3 bucket
-        s3.delete_object(Bucket=bucket_name, Key=filename_with_extension)
-
-        # Find the corresponding video object in the database and delete it
-        video = Video.objects.get(video_file__contains=filename)
-        video.delete()
-
-        # Redirect back to the home page
-        return HttpResponseRedirect(reverse('home'))
-    except ClientError as e:
-        # Handle any errors
-        print("An error occurred:", e)
-        # Redirect back to the home page or display an error message
-        return HttpResponseRedirect(reverse('home'))
+from django.contrib import messages
 
 
 def home(request):
@@ -73,17 +40,22 @@ def upload(request):
     if request.method == 'POST':
         form = VideoForm(request.POST, request.FILES)
         if form.is_valid():
-            video = form.save(commit=False)
             title = form.cleaned_data['title']
-            filename = slugify(title) + '.mp4'
-            video.video_file.name = filename
-            video.user = request.user
-            video.save()
-            return redirect('home')
+            # Check if the title is already used by another video
+            if Video.objects.filter(title=title).exists():
+                # If the title is already used, display an error message
+                messages.error(request, "Title already exists. Please choose a different title.")
+            else:
+                # If the title is unique, proceed with saving the video
+                video = form.save(commit=False)
+                filename = slugify(title) + '.mp4'
+                video.video_file.name = filename
+                video.user = request.user
+                video.save()
+                return redirect('home')
     else:
         form = VideoForm()
     return render(request, 'upload.html', {'form': form})
-
 
 class CustomLoginView(LoginView):
     template_name = 'login.html'
@@ -108,4 +80,35 @@ def custom_register(request):
 
     return render(request, 'register.html', {'form': form})
 
+@login_required(login_url='login')
+def delete_video(request, filename):
+    filename_with_extension = filename + ".mp4"
 
+    user = request.user
+
+    try:
+        video = Video.objects.get(video_file__contains=filename, user=user)
+    except Video.DoesNotExist:
+
+
+        return render(request, 'error.html')
+
+    aws_access_key_id = settings.AWS_ACCESS_KEY_ID
+    aws_secret_access_key = settings.AWS_SECRET_ACCESS_KEY
+
+
+    bucket_name = 'videobleepingstack-destinationbucket84c050d8-lvjgauckm6rd'
+    region_name = 'us-east-1'
+
+    # Connect to S3
+    s3 = boto3.client('s3', region_name=region_name,
+                      aws_access_key_id=aws_access_key_id,
+                      aws_secret_access_key=aws_secret_access_key)
+
+    try:
+        s3.delete_object(Bucket=bucket_name, Key=filename_with_extension)
+        video.delete()
+        return HttpResponseRedirect(reverse('home'))
+    except ClientError as e:
+        print("An error occurred:", e)
+        return HttpResponseRedirect(reverse('home'))

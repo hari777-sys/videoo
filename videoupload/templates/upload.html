@@ -3,22 +3,31 @@
 {% block title %}Upload - Website{% endblock %}
 
 {% block content %}
-    <div class="upload-container">
-        <h2>Upload</h2>
-        <form method="post" action="{% url 'upload' %}" enctype="multipart/form-data">
-            {% csrf_token %}
+<div class="upload-container">
+    <h2>Upload</h2>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-danger" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <form method="post" action="{% url 'upload' %}" enctype="multipart/form-data">
+        {% csrf_token %}
 
-            <label >Title</label>
-                    {{ form.title }}
-                <br>
-            <label >Description</label>
-                    {{ form.description }}
-                <br>
-            <label >Video File</label>
-                    {{ form.video_file }}
+        <label >Title</label>
+        {{ form.title }}
+        <br>
 
+        <label>Description</label>
+        {{ form.description }}
+        <br>
+
+        <label >Video File</label>
+        {{ form.video_file }}
         <br><br>
-            <button type="submit">Upload</button>
-        </form>
-    </div>
+
+        <button type="submit">Upload</button>
+    </form>
+</div>
 {% endblock %}
