@@ -10,9 +10,10 @@ from botocore.exceptions import ClientError
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from .models import Video
+from .models import Video,Report
 from django.contrib import messages
-
+from .forms import ReportForm
+from django.shortcuts import get_object_or_404
 
 def home(request):
     s3 = boto3.client('s3', region_name='us-east-1')
@@ -28,7 +29,6 @@ def home(request):
 
         # Extract title and description if available
         filename = item['Key'].split('/')[-1].split('.')[0]
-        #video_id = filename
 
         videos.append({'url': url, 'filename': filename})
 
@@ -112,3 +112,19 @@ def delete_video(request, filename):
     except ClientError as e:
         print("An error occurred:", e)
         return HttpResponseRedirect(reverse('home'))
+
+
+def report(request, filename):
+    video = get_object_or_404(Video, video_file__contains=filename)
+
+    if request.method == 'POST':
+        form = ReportForm(request.POST)
+        if form.is_valid():
+            report = form.save(commit=False)
+            report.video = video
+            report.reporter = request.user
+            report.save()
+            return redirect('home')
+    else:
+        form = ReportForm()
+    return render(request, 'report.html', {'form': form})

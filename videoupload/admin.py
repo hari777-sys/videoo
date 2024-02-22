@@ -3,6 +3,7 @@ from .models import Video
 import boto3
 from botocore.exceptions import ClientError
 from django.conf import settings
+from .models import Report
 
 class VideoAdmin(admin.ModelAdmin):
     def get_actions(self, request):
@@ -38,3 +39,13 @@ class VideoAdmin(admin.ModelAdmin):
     delete_video_by_filename.short_description = "Delete videos by filename"
 
 admin.site.register(Video, VideoAdmin)
+
+
+
+class ReportAdmin(admin.ModelAdmin):
+    list_display = ['video', 'reporter', 'created_at']
+    search_fields = ['video__title', 'reporter__username']
+
+admin.site.register(Report, ReportAdmin)
+
+

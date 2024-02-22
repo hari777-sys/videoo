@@ -17,7 +17,7 @@
 
             <a href="{% url 'delete_video' video.filename %}">Delete</a>
 
-                <a href="#">Report</a>
+                <a href="{% url 'report' video.filename %}">Report</a>
             </div>
             </div>
         {% endfor %}

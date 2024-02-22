@@ -1,5 +1,6 @@
 from django import forms
 from .models import Video
+from .models import Report
 
 class VideoForm(forms.ModelForm):
     class Meta:
@@ -14,3 +15,14 @@ class VideoForm(forms.ModelForm):
                 raise forms.ValidationError('Only .mp4 files are allowed.')
 
         return video_file
+
+class ReportForm(forms.ModelForm):
+    class Meta:
+        model = Report
+        fields = ['message']
+        widgets = {
+            'message': forms.Textarea(attrs={'rows': 5}),
+        }
+        labels = {
+            'message': 'Report'
+        }
