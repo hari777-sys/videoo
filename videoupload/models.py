@@ -24,3 +24,9 @@ class Report(models.Model):
 
     def __str__(self):
         return f"Report for {self.video.title} by {self.reporter.username}"
+
+
+
+class TextFile(models.Model):
+    file_name = models.CharField(max_length=255, unique=True)
+    content = models.TextField()

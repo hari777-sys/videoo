@@ -16,10 +16,10 @@ from .forms import ReportForm
 from django.shortcuts import get_object_or_404
 
 def home(request):
-    s3 = boto3.client('s3', region_name='us-east-1')
+    s3 = boto3.client('s3', region_name=settings.AWS_S3_REGION_NAME)
 
     # Get the list of objects (videos) in the bucket
-    response = s3.list_objects(Bucket='videobleepingstack-destinationbucket84c050d8-lvjgauckm6rd')
+    response = s3.list_objects(Bucket=settings.AWS_DESTINATION_BUCKET_NAME)
 
     # Extract video URLs from the response
     videos = []
@@ -97,8 +97,8 @@ def delete_video(request, filename):
     aws_secret_access_key = settings.AWS_SECRET_ACCESS_KEY
 
 
-    bucket_name = 'videobleepingstack-destinationbucket84c050d8-lvjgauckm6rd'
-    region_name = 'us-east-1'
+    bucket_name = settings.AWS_DESTINATION_BUCKET_NAME
+    region_name = settings.AWS_S3_REGION_NAME
 
     # Connect to S3
     s3 = boto3.client('s3', region_name=region_name,
@@ -113,7 +113,7 @@ def delete_video(request, filename):
         print("An error occurred:", e)
         return HttpResponseRedirect(reverse('home'))
 
-
+@login_required(login_url='login')
 def report(request, filename):
     video = get_object_or_404(Video, video_file__contains=filename)
 
