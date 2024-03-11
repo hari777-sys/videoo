@@ -19,14 +19,7 @@
         {{ form.title }}
         <br>
 
-        <div class="report-container">
-    <form method="post">
-        {% csrf_token %}
-        <h2>Report Video</h2>
-        {{ form.as_p }}
-        <button type="submit">Send</button>
-    </form>
-</div>
+      <label>description</label>
         {{ form.description }}
         <br>
 
