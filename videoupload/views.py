@@ -16,23 +16,29 @@ from .forms import ReportForm
 from django.shortcuts import get_object_or_404
 
 def home(request):
-    s3 = boto3.client('s3', region_name=settings.AWS_S3_REGION_NAME)
+    aws_access_key_id = settings.AWS_ACCESS_KEY_ID
+    aws_secret_access_key = settings.AWS_SECRET_ACCESS_KEY
+    region_name = settings.AWS_S3_REGION_NAME
+    bucket_name = settings.AWS_DESTINATION_BUCKET_NAME
 
-    # Get the list of objects (videos) in the bucket
-    response = s3.list_objects(Bucket=settings.AWS_DESTINATION_BUCKET_NAME)
+    s3 = boto3.client('s3', region_name=region_name,
+                      aws_access_key_id=aws_access_key_id,
+                      aws_secret_access_key=aws_secret_access_key)
 
-    # Extract video URLs from the response
-    videos = []
-    for item in response.get('Contents', []):
-        # Construct the URL for each video object
-        url = f"https://{response['Name']}.s3.amazonaws.com/{item['Key']}"
+    try:
+        response = s3.list_objects(Bucket=bucket_name)
+        videos = []
+        for item in response.get('Contents', []):
+            url = f"https://{bucket_name}.s3.amazonaws.com/{item['Key']}"
+            filename = item['Key'].split('/')[-1].split('.')[0]
 
-        # Extract title and description if available
-        filename = item['Key'].split('/')[-1].split('.')[0]
+            videos.append({'url': url, 'filename': filename})
 
-        videos.append({'url': url, 'filename': filename})
+        return render(request, 'index.html', {'videos': videos})
 
-    return render(request, 'index.html', {'videos': videos})
+    except ClientError as e:
+        print("An error occurred:", e)
+        return render(request, 'error.html')
 
 
 @login_required(login_url='login')
