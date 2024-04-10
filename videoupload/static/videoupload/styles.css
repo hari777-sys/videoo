@@ -75,7 +75,7 @@ header .btn{
     cursor:pointer;
     display:none;
 }
-
+/*
  .video-card video::-webkit-media-controls-enclosure {
         position: relative;
         width: 100%;
@@ -85,13 +85,14 @@ header .btn{
         border-radius: 1px !important;
         filter: alpha(opacity=80);
         opacity: 0.4;
-        margin-bottom: -5px; /* Adjust this value based on the height of the controls */
+        margin-bottom: -5px;
         overflow: hidden;
     }
     .video-card video::-webkit-media-controls-panel {
         background-color: #eee;
-        height: 35px !important; /* Adjust this value based on the desired height of the controls */
-    }
+        height: 35px !important;
+    }*/
+
 
 .video-container {
   display: flex;
@@ -186,6 +187,22 @@ background-color:grey;
         transform: translateY(0);
     }
 }
+.password-container {
+    position: relative;
+}
+
+.password-container input[type="password"] {
+    padding-right: 30px; /* Increase right padding to make space for the icon */
+}
+
+.password-container i {
+    position: absolute;
+    top: 40%;
+    right: 30px; /* Adjust the right position as needed */
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
 .register-container,
 .login-container,
 .upload-container,

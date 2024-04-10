@@ -5,21 +5,59 @@
 {% block content %}
     <div class="register-container">
         <h2>Register</h2>
-        <form method="post" action="{% url 'register' %}">
+        <form method="post" action="{% url 'register' %}" onsubmit="return validatePassword()">
             {% csrf_token %}
             <label for="username">Username</label>
             <input type="text" id="username" name="username" required>
-<br>
+            <br>
             <label for="email">Email</label>
             <input type="email" id="email" name="email" required>
-<br>
+            <br>
             <label for="password1">Password</label>
-            <input type="password" id="password1" name="password1" required>
-<br>
+            <div class="password-container">
+                <input type="password" id="password1" name="password1" required>
+                <i class="fa fa-eye-slash" aria-hidden="true" id="togglePassword"></i>
+            </div>
+            <br>
             <label for="password2">Confirm Password</label>
             <input type="password" id="password2" name="password2" required>
-<br><br><br>
+            <br><br><br>
             <button type="submit">Register</button>
         </form>
     </div>
+
+    <script>
+        function validatePassword() {
+            var password = document.getElementById("password1").value;
+            var confirmPassword = document.getElementById("password2").value;
+
+            // Check if passwords match
+            if (password !== confirmPassword) {
+                alert("Passwords do not match.");
+                return false;
+            }
+
+            // Check if password meets requirements
+            var passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+            if (!passwordRegex.test(password)) {
+                alert("Password must be at least 8 characters long and contain at least one digit, one uppercase letter, and one lowercase letter.");
+                return false;
+            }
+
+            return true; // If all checks pass, return true to submit the form
+        }
+
+        document.getElementById("togglePassword").addEventListener("click", function() {
+            var passwordField = document.getElementById("password1");
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                this.classList.remove('fa-eye-slash');
+                this.classList.add('fa-eye');
+            } else {
+                passwordField.type = "password";
+                this.classList.remove('fa-eye');
+                this.classList.add('fa-eye-slash');
+            }
+        });
+    </script>
 {% endblock %}
